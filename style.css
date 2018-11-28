@@ -21,4 +21,5 @@ body {
 .btn, .btn-group {
     width: 100%;
     color: white;
+    border-radius: 0;
 }
