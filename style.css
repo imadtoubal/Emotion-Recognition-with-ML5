@@ -23,3 +23,7 @@ body {
     color: white;
     border-radius: 0;
 }
+
+video {
+    opacity: 0;
+}
