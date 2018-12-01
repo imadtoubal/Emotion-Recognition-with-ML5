@@ -8,16 +8,19 @@ let trainButton;
 let trainingProgress;
 let canvas;
 
+let cut;
 let ctracker;
 
 
 let classes = ['Happy', 'Sad', 'Surprised'];
+let classesCount = [0, 0, 0];
 
 function setup() {
   video = createCapture(VIDEO);
   video.parent('mainCanvas');
   video.size(649, 480);
   video.position(0, 0);
+  video.hide();
   canvas = createCanvas(640, 480);
   canvas.parent('mainCanvas');
   background(20);
@@ -27,9 +30,7 @@ function setup() {
     console.log('Model is ready!');
   });
 
-  classifier = mobilenet.classification(video, () => {
-    console.log('Video is ready!');
-  });
+  classifier = mobilenet.classification(video, ()=> console.log('Video is ready!'));
 
   trainingProgress = select('#training-progress');
 
@@ -38,7 +39,12 @@ function setup() {
     probabilities.push(select('#class' + (i - (-1)) + '-probability'));
     classButtons.push(select('#class' + (i - (-1)) + 'button'));
     classButtons[i].mousePressed(function () {
-      classifier.addImage(classes[i]);
+      // while(cut.pixels.length == 0);
+      // console.log(cut);
+      classifier.addImage(classes[i], () =>{ 
+        console.log('Added!');
+      });
+      classButtons[i].html(classes[i] + ' (' + (++classesCount[i]) + ')');
     });
   }
   trainButton = select('#train-button');
@@ -72,7 +78,7 @@ function setup() {
 }
 
 function draw() {
-  image(video, 0, 0, width, height);
+  // image(video, 0, 0, width, height);
   clear();
   // if(videoInput) {
   image(video, 0, 0);
@@ -102,28 +108,31 @@ function draw() {
   // background(0);
   let cw = maxx - minx, ch = maxy - miny;
   if (cw > 0 && ch > 0) {
-    loadPixels();
+    // loadPixels();
     cut = get(minx, miny, cw, ch);
+    cut.loadPixels();
+    cut.updatePixels();
     noFill();
     stroke(255, 255, 0)
     rect(minx, miny, cw, ch);
-    background(10);
+    background(0, 0, 0, 100);
     image(cut, minx, miny);
+
   }
-  for (var i = 0; i < positions.length; i++) {
-    // set the color of the ellipse based on position on screen
-    fill(map(positions[i][0], width * 0.33, width * 0.66, 0, 255), map(positions[i][1], height * 0.33, height * 0.66, 0, 255), 255);
-    // draw ellipse at each position point
-    var val = 5;
-    ellipse(positions[i][0], positions[i][1], val);
-  }
+  // for (var i = 0; i < positions.length; i++) {
+  //   // set the color of the ellipse based on position on screen
+  //   fill(map(positions[i][0], width * 0.33, width * 0.66, 0, 255), map(positions[i][1], height * 0.33, height * 0.66, 0, 255), 255);
+  //   // draw ellipse at each position point
+  //   var val = 5;
+  //   ellipse(positions[i][0], positions[i][1], val);
+  // }
 }
 
 function gotResults(error, result) {
   if (error) {
     console.log(error);
   } else {
-    console.log(result);
+    // console.log(result);
     for (let i = 0; i < 3; i++) {
       predictions[i].html(classes[i]);
       probabilities[i].html((result == classes[i] ? 100 : 0) + '%');
