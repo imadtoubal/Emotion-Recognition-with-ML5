@@ -26,9 +26,20 @@ function setup() {
   background(20);
 
   // video.hide();
-  mobilenet = ml5.featureExtractor('MobileNet', () => {
+  mobilenet = ml5.featureExtractor('MobileNet', {   
+    version: 1,
+    alpha: 1.0,
+    topk: 3,
+    learningRate: 0.0001,
+    hiddenUnits: 100,
+    epochs: 20,
+    numClasses: 3,
+    batchSize: 0.4,
+  }, () => {
     console.log('Model is ready!');
   });
+
+  mobilenet.numClasses = 3;
 
   classifier = mobilenet.classification(video, ()=> console.log('Video is ready!'));
 
