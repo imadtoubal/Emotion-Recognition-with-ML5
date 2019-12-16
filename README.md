@@ -2,6 +2,8 @@
 
 Facial Emotion Recognition with ML5: A computer vision project that runs in the browser using ml5.js and TensorFlow.js
 
+![PREVIEW](preview.gif)
+
 Click on the video below to see how this wotks!
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/onKT9OwMiMU/0.jpg)](https://www.youtube.com/watch?v=onKT9OwMiMU)
