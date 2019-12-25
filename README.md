@@ -4,7 +4,8 @@ Facial Emotion Recognition with ML5: A computer vision project that runs in the 
 
 ![PREVIEW](preview.gif)
 
-Click on the [video link](https://www.youtube.com/watch?v=onKT9OwMiMU) to see how this wotks!
+* Click on the [video link](https://www.youtube.com/watch?v=onKT9OwMiMU) to see how this wotks!
+* [Click here](https://imadtoubal.github.io/Emotion-Recognition-with-ML5/) for demo
 
 ## Getting Started
 
